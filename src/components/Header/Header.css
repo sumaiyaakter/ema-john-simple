@@ -1,0 +1,28 @@
+.brand-logo {
+    text-align: center;
+}
+.brand-logo img{
+    height: 80px;
+}
+.navigation{
+    background-color: #000;
+    height: 80px;
+}
+.navigation ul{
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.navigation li{
+    list-style: none;
+}
+.navigation li a{
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    padding: 28px 20px;
+    transition: .3s;
+}
+.navigation li a:hover{
+    background-color: #2f2929;
+}
