@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import fakeData from '../../fakeData';
 import './Shop.css';
 import Productts from '../Product/Productts';
 import Cart from '../Cart/Cart';
+import { addToDatabaseCart, getDatabaseCart } from '../../utilities/databaseManager';
+import { Link } from 'react-router-dom';
+
 
 const Shop = () => {
     
@@ -11,22 +14,54 @@ const Shop = () => {
     const [cart,setCart] = useState([]);
     // console.log(fakeData);
 
-    const handleAddProducts =(addProductuct) =>{
-        const newCart = [...cart, addProductuct];
+    useEffect(()=>{
+        const saveCart= getDatabaseCart();
+        const producctkeys = Object.keys(saveCart);
+        const previousCart = producctkeys.map(existingkey => {
+            const product36 = fakeData.find(product37 => product37.key === existingkey);
+            product36.quantity = saveCart[existingkey]
+            return product36;
+        })
+        setCart(previousCart);
+    }, [])
+
+    const handleAddProducts =(addProduct) =>{
+        const productToBeAdded = addProduct.key;
+        const sameProduct = cart.find(product22 => product22.key === productToBeAdded);
+        let count = 1;
+        let newCart;
+
+        if(sameProduct){
+            count = sameProduct.quantity+1;
+            sameProduct.quantity = count;
+            const others = cart.filter(product33 => product33.key !== productToBeAdded);
+            newCart = [...others, sameProduct];
+        }else{
+            addProduct.quantity = 1;
+            newCart = [...cart, addProduct];
+        }
         setCart (newCart);
+        addToDatabaseCart(addProduct.key, count);
     }
 
     return (
         <div className="shop-container">
             <div className="product-container">
                 {
-                 products.map(pd=> <Productts handleAddProduct = {handleAddProducts} product={pd}></Productts>)
+                 products.map(pd=> <Productts 
+                    key = {pd.key}
+                    showAddToCart={true} 
+                    handleAddProduct = {handleAddProducts} 
+                    product={pd}
+                    ></Productts>)
 
                 }
             </div>
 
             <div className="cart-container">
-                <Cart totalCart = {cart}></Cart>
+                <Cart totalCart = {cart}>
+                    <Link to="/review"><button className="btn">review</button></Link>    
+                </Cart>  {/* const cart2 = props.totalCart;  == cart.js*/}
             </div>
         </div>
     );

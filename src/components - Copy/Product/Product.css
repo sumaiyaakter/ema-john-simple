@@ -1,0 +1,22 @@
+.single-product{
+    display: flex;
+}
+.single-product {
+    border-bottom: 1px solid #d3d3d3;
+    padding: 30px 0;
+}
+.single-product__img {
+    margin-right: 60px;
+}
+.single-product__content {
+    width: 50%;
+}
+.btn{
+    background-color: yellowgreen;
+    padding: 15px 30px;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}

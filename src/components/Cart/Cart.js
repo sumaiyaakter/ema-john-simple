@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Cart.css';
+import { UserContext } from '../../App';
+
 const Cart = (props) => {
     const cart2 = props.totalCart;
-    console.log(cart2);
 
-    // const totalPrice = cart2.reduce((total, prd) => total + prd.price, 0);
+    const user = useContext(UserContext);
+    console.log(user);
+    // console.log(cart2);
+    // const totalPrice = cart2.reduce((total, product11) => total + product11.price, 0); 
+    // OR
     let totalPrice = 0;
     for (let i = 0; i< cart2.length; i++){
-        const prd = cart2[i];
-        totalPrice = totalPrice + prd.price;
+        const product11 = cart2[i];
+        totalPrice = totalPrice + product11.price * product11.quantity;
     }  
 
     let shipping = 0;
@@ -39,6 +44,10 @@ const Cart = (props) => {
             <p>shipping Cost: {shipping}</p>      
             <p>Tax + VAT: {tax}</p>      
             <p>Total Price: {grandTotal}</p>
+            {
+                props.children
+            }
+            <p>{user}</p>
         </div>
     );
 };
